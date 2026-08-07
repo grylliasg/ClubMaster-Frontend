@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import TeamCard from "./TeamCard"
 import axios from "axios"
+import { Container, Grid, Typography } from "@mui/material"
 
 function TeamsPage() {
 
@@ -28,14 +29,18 @@ function TeamsPage() {
     return (
         loading ? <p>Loading Teams...</p> :
         error ? <p>{error}</p> :
-        <>
+        <Container>
+            <Typography variant="h4">Teams</Typography>
+            <Grid container>
             {teams.map((team) => (
+                <Grid item xs={12} sm={6} key={team.id}>
                 <TeamCard
-                    key={team.id}
                     team={team}
                 />
+                </Grid>
             ))}
-        </>
+            </Grid>
+        </Container>
     )
 }
 

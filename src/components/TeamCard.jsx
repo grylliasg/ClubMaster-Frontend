@@ -1,10 +1,15 @@
+import {Card, CardContent, Container, Typography} from "@mui/material"
+import {Link} from "react-router-dom"
 
 function TeamCard({team}) {
+    
     return (
-        <div>
-            <h2>{team.name}</h2>
-            <p>{team.country}</p>
-        </div>
+        <Card>
+            <CardContent>
+            <Link to={`/teams/${team.name}`}><Typography variant="h5">{team.name}</Typography></Link>
+            <Typography>{team.country}</Typography>
+            </CardContent>
+        </Card>
     )
 }
 
