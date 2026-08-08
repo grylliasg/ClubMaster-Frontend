@@ -1,33 +1,59 @@
-import { Card, CardContent, Container, Typography } from "@mui/material"
+import { Card, CardContent, Container, Snackbar, Typography } from "@mui/material"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 function TeamDetailsPage() {
 
-    const {name} = useParams() // take the var name from the url
+    const { name } = useParams() // take the var name from the url
+    const navigate = useNavigate()
 
     const [team, setTeam] = useState(null)
+    const [error, setError] = useState("")
 
     useEffect(() => {
         async function fetchTeam() {
-            const response = await axios.get(`http://localhost:8080/teams/${name}`)
-            setTeam(response.data)
+            try {
+                const response = await axios.get(`http://localhost:8080/teams/${name}`)
+                setTeam(response.data)
+            }
+            catch {
+                setError("Team not found")
+            }
         }
 
         fetchTeam()
     }, [name])
 
+    useEffect(() => {
+        if (!error) {
+            return
+        }
+
+        const timer = setTimeout(() => {
+            navigate("/teams")
+        }, 2000)
+
+        return () => clearTimeout(timer)
+    }, [error, navigate])
+
     return (
-        !team ? <p>Loading...</p> :
-        <Container>
-            <Card>
-                <CardContent>
-                    <Typography variant="h4">{team.name}</Typography>
-                    <Typography variant="body1">{team.country}</Typography>
-                </CardContent>
-            </Card>
-        </Container>
+        <>
+            {team ? <Container>
+                <Card>
+                    <CardContent>
+                        <Typography variant="h4">{team.name}</Typography>
+                        <Typography variant="body1">{team.country}</Typography>
+                    </CardContent>
+                </Card>
+            </Container> :
+
+                <p>Loading...</p>}
+
+            <Snackbar open={!!error} message={error} ></Snackbar>
+
+        </>
+
     )
 }
 

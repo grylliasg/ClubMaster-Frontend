@@ -5,6 +5,10 @@ import { Container, Grid, Typography } from "@mui/material"
 
 function TeamsPage() {
 
+    const [teams, setTeams] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState("")
+
     useEffect(() => {
         async function fetchTeams() {
             try {
@@ -21,10 +25,6 @@ function TeamsPage() {
 
         fetchTeams()
     }, [])
-
-    const [teams, setTeams] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState("")
 
     return (
         loading ? <p>Loading Teams...</p> :
