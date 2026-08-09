@@ -1,0 +1,57 @@
+import { Button, Container, Snackbar, TextField, Typography } from "@mui/material"
+import axios from "axios"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+
+function CreateTeamPage() {
+
+    const [name, setName] = useState("")
+    const [country, setCountry] = useState("")
+    const [error, setError] = useState("")
+    const navigate = useNavigate()
+
+    const handleSubmit = async () => {
+        try {
+            await axios.post("http://localhost:8080/teams",
+                {
+                    name: name,
+                    country: country
+                })
+
+            navigate("/teams")
+        }
+        catch {
+            setError("Failed to create team")
+        }
+    }
+
+    return (
+        <Container>
+            <Typography variant="h4">
+                Create Team
+            </Typography>
+
+            <TextField
+                label="Team Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
+
+            <TextField
+                label="Country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+            />
+
+            <Button variant="contained" onClick={handleSubmit}>
+                Create Team
+            </Button>
+
+            <Snackbar open={!!error} message={error} ></Snackbar>
+        </Container>
+
+
+    )
+}
+
+export default CreateTeamPage

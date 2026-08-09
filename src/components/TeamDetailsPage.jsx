@@ -1,4 +1,4 @@
-import { Card, CardContent, Container, Snackbar, Typography } from "@mui/material"
+import { Button, Card, CardContent, Container, Snackbar, Typography } from "@mui/material"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
@@ -10,6 +10,21 @@ function TeamDetailsPage() {
 
     const [team, setTeam] = useState(null)
     const [error, setError] = useState("")
+
+    const handleDelete = () => {
+        async function deleteTeam() {
+            try {
+                await axios.delete(`http://localhost:8080/teams/${team.id}`)
+
+                navigate("/teams")
+            }
+            catch {
+                setError("Failed to delete team")
+            }
+        }
+
+        deleteTeam()
+    }
 
     useEffect(() => {
         async function fetchTeam() {
@@ -44,6 +59,7 @@ function TeamDetailsPage() {
                     <CardContent>
                         <Typography variant="h4">{team.name}</Typography>
                         <Typography variant="body1">{team.country}</Typography>
+                        <Button variant="contained" onClick={handleDelete}>Delete Team</Button>
                     </CardContent>
                 </Card>
             </Container> :
