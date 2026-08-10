@@ -22,7 +22,7 @@ function EditTeamPage() {
                         country: country
                     }
                 )
-                
+
                 navigate("/teams")
             }
             catch {
@@ -54,6 +54,7 @@ function EditTeamPage() {
 
     return (
         <Container>
+            <Button variant="outlined" onClick={() => navigate(`/teams/${teamName}`)}>Back to team</Button>
             <Typography variant="h4">
                 Edit Team
             </Typography>

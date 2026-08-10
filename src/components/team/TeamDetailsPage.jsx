@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 
 function TeamDetailsPage() {
 
-    const { name } = useParams() // take the var name from the url
+    const { name } = useParams() // take the name from the URL
     const navigate = useNavigate()
 
     const [team, setTeam] = useState(null)
@@ -61,10 +61,12 @@ function TeamDetailsPage() {
                 <Container>
                     <Grid item xs={12}>
                         <Card>
+                            <Button variant="outlined" onClick={() => navigate(`/teams`)}>Back to teams</Button>
                             <CardContent>
                                 <Typography variant="h4">{team.name}</Typography>
                                 <Typography variant="body1">{team.country}</Typography>
-                                <Button variant="contained" onClick={handleDelete}>Delete Team</Button>
+                                <Button variant="contained" onClick={() => {navigate(`/teams/${team.name}/edit`)}}>Edit Team</Button>
+                                <Button variant="outlined" color="error" onClick={handleDelete}>Delete Team</Button>
                             </CardContent>
                         </Card>
                     </Grid>
@@ -75,13 +77,13 @@ function TeamDetailsPage() {
                             <Typography variant="h5">
                                 Players
                             </Typography>
-
+                            <Button variant="contained" onClick={() => navigate("/players/new", { state: { team } })}>Add Player</Button>
                             <Grid container spacing={4}>
                                 {players.map((player) => (
                                     <Grid item xs={12} sm={6} md={4} key={player.id}>
                                         <Card>
                                             <CardContent>
-                                                <Link to={`/players/${player.id}`} state={{player}} variant="h6">
+                                                <Link to={`/players/${player.id}`} state={{ player }} variant="h6">
                                                     {player.firstName} {player.lastName}
                                                 </Link>
 

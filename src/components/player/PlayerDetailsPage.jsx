@@ -1,11 +1,10 @@
 import { Button, Card, CardContent, Container, Grid, Snackbar, Typography } from "@mui/material"
 import axios from "axios"
 import { useState } from "react"
-import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 function PlayerDetailsPage() {
 
-    const { id } = useParams()
     const navigate = useNavigate()
 
     const location = useLocation()
@@ -18,12 +17,11 @@ function PlayerDetailsPage() {
         async function deletePlayer() {
             try {
                 await axios.delete(`http://localhost:8080/players/${player.id}`)
-                navigate("/teams")
+                navigate(`/teams/${player.team.name}`)
             }
             catch {
                 setError("Failed to delete player")
             }
-            
         }
 
         deletePlayer()
@@ -34,11 +32,13 @@ function PlayerDetailsPage() {
             <Container>
                 <Grid item xs={12}>
                     <Card>
+                        <Button variant="outlined" onClick={() => navigate(`/teams/${player.team.name}`)}>Back to team</Button>
                         <CardContent>
                             <Typography variant="h4">{player.firstName} {player.lastName}</Typography>
                             <Typography variant="body1">{player.position}</Typography>
                             <Typography variant="body1">{player.dateOfBirth}</Typography>
-                            <Button variant="contained" onClick={handleDelete}>Delete Player</Button>
+                            <Button variant="contained" onClick={() => navigate(`/players/${player.id}/edit`, { state: { player } })}>Edit Player</Button>
+                            <Button variant="outlined" color="error" onClick={handleDelete}>Delete Player</Button>
                         </CardContent>
                     </Card>
                 </Grid>

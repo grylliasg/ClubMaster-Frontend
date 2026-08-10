@@ -27,6 +27,7 @@ function CreateTeamPage() {
 
     return (
         <Container>
+            <Button variant="outlined" onClick={() => navigate(`/teams`)}>Back to teams</Button>
             <Typography variant="h4">
                 Create Team
             </Typography>
