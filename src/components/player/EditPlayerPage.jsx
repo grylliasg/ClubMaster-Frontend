@@ -1,7 +1,7 @@
 import { Button, Container, Snackbar, TextField, Typography } from "@mui/material"
-import axios from "axios"
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import api from "../../api"
 
 function EditPlayerPage() {
 
@@ -18,7 +18,7 @@ function EditPlayerPage() {
     const handleSubmit = () => {
         async function editPlayer() {
             try {
-                const response = await axios.put(`http://localhost:8080/players/${player.id}`,
+                const response = await api.put(`/players/${player.id}`,
                     {
                         firstName: firstName,
                         lastName: lastName,

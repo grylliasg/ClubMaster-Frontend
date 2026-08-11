@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, Container, Grid, Snackbar, Typography } from "@mui/material"
-import axios from "axios"
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import api from "../../api"
 
 function PlayerDetailsPage() {
 
@@ -16,7 +16,7 @@ function PlayerDetailsPage() {
 
         async function deletePlayer() {
             try {
-                await axios.delete(`http://localhost:8080/players/${player.id}`)
+                await api.delete(`/players/${player.id}`)
                 navigate(`/teams/${player.team.name}`)
             }
             catch {

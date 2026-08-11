@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, Container, Grid, Snackbar, Typography } from "@mui/material"
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
+import api from "../../api"
 
 function TeamDetailsPage() {
 
@@ -15,7 +15,7 @@ function TeamDetailsPage() {
     const handleDelete = () => {
         async function deleteTeam() {
             try {
-                await axios.delete(`http://localhost:8080/teams/${team.id}`)
+                await api.delete(`/teams/${team.id}`)
 
                 navigate("/teams")
             }
@@ -30,7 +30,7 @@ function TeamDetailsPage() {
     useEffect(() => {
         async function fetchTeam() {
             try {
-                const response = await axios.get(`http://localhost:8080/teams/${name}`)
+                const response = await api.get(`/teams/${name}`)
                 setTeam(response.data)
             }
             catch {
@@ -44,7 +44,7 @@ function TeamDetailsPage() {
     useEffect(() => {
         async function fetchPlayers() {
             try {
-                const playersResponse = await axios.get(`http://localhost:8080/players/${name}`)
+                const playersResponse = await api.get(`/players/${name}`)
                 setPlayers(playersResponse.data)
             }
             catch {

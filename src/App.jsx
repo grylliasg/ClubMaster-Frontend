@@ -6,18 +6,21 @@ import EditPlayerPage from "./components/player/EditPlayerPage.jsx"
 import CreatePlayerPage from "./components/player/CreatePlayerPage.jsx"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import CreateTeamPage from "./components/team/CreateTeamPage.jsx"
+import LoginPage from "./components/LoginPage.jsx"
+import ProtectedRoute from "./components/ProtectedRoute.jsx"
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/teams" element={<TeamsPage />}></Route>
-                <Route path="/teams/:name" element={<TeamDetailsPage />} />
-                <Route path="/teams/new" element={<CreateTeamPage />} />
-                <Route path="/teams/:teamName/edit" element={<EditTeamPage />} />
-                <Route path="/players/:id" element={<PlayerDetailsPage />} />
-                <Route path="/players/:id/edit" element={<EditPlayerPage />} />
-                <Route path="/players/new" element={<CreatePlayerPage />} />
+                <Route path="/teams" element={<ProtectedRoute><TeamsPage /></ProtectedRoute>}></Route>
+                <Route path="/teams/:name" element={<ProtectedRoute><TeamDetailsPage /></ProtectedRoute>} />
+                <Route path="/teams/new" element={<ProtectedRoute><CreateTeamPage /></ProtectedRoute>} />
+                <Route path="/teams/:teamName/edit" element={<ProtectedRoute><EditTeamPage /></ProtectedRoute>} />
+                <Route path="/players/:id" element={<ProtectedRoute><PlayerDetailsPage /></ProtectedRoute>} />
+                <Route path="/players/:id/edit" element={<ProtectedRoute><EditPlayerPage /></ProtectedRoute>} />
+                <Route path="/players/new" element={<ProtectedRoute><CreatePlayerPage /></ProtectedRoute>} />
+                <Route path="/login" element={<LoginPage />} />
             </Routes>
         </BrowserRouter>
         
