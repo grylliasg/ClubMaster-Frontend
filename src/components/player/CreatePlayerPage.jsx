@@ -1,7 +1,7 @@
 import { Button, Container, Snackbar, TextField, Typography } from "@mui/material"
-import axios from "axios"
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import api from "../../api"
 
 
 function CreatePlayerPage() {
@@ -20,7 +20,7 @@ function CreatePlayerPage() {
 
         async function addPlayer() {
             try {
-                const response = await axios.post("http://localhost:8080/players",
+                const response = await api.post("/players",
                     {
                         firstName: firstName,
                         lastName: lastName,

@@ -1,7 +1,7 @@
 import { Button, Container, Snackbar, TextField, Typography } from "@mui/material"
-import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import api from "../../api"
 
 function CreateTeamPage() {
 
@@ -12,7 +12,7 @@ function CreateTeamPage() {
 
     const handleSubmit = async () => {
         try {
-            await axios.post("http://localhost:8080/teams",
+            await api.post("/teams",
                 {
                     name: name,
                     country: country

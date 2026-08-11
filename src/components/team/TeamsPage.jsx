@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import TeamCard from "./TeamCard"
-import axios from "axios"
-import { Button, Container, Grid, Typography } from "@mui/material"
+import { Box, Button, Container, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
+import api from "../../api"
 
 function TeamsPage() {
 
@@ -12,10 +12,15 @@ function TeamsPage() {
 
     const navigate = useNavigate()
 
+    const handleLogout = () => {
+        localStorage.removeItem("token")
+        navigate("/login")
+    }
+
     useEffect(() => {
         async function fetchTeams() {
             try {
-                const response = await axios.get("http://localhost:8080/teams")
+                const response = await api.get("/teams")
                 setTeams(response.data)
             }
             catch {
@@ -33,6 +38,16 @@ function TeamsPage() {
         loading ? <p>Loading Teams...</p> :
             error ? <p>{error}</p> :
                 <Container>
+                    <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+                        <Button
+                            variant="contained"
+                            color="error"
+                            size="small"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </Button>
+                    </Box>
                     <Typography variant="h4">Teams</Typography>
                     <Button variant="contained" size="small" onClick={() => navigate("/teams/new")}>Add Team</Button>
                     <Grid container>

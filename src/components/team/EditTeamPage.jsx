@@ -1,7 +1,7 @@
 import { Button, Container, Grid, Snackbar, TextField, Typography } from "@mui/material"
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { Navigate, useNavigate, useParams } from "react-router-dom"
+import api from "../../api"
 
 function EditTeamPage() {
 
@@ -16,7 +16,7 @@ function EditTeamPage() {
     const handleSubmit = () => {
         async function editTeam() {
             try {
-                await axios.put(`http://localhost:8080/teams/${id}`,
+                await api.put(`/teams/${id}`,
                     {
                         name: name,
                         country: country
@@ -36,7 +36,7 @@ function EditTeamPage() {
     useEffect(() => {
         async function fetchTeam() {
             try {
-                const response = await axios.get(`http://localhost:8080/teams/${teamName}`)
+                const response = await api.get(`/teams/${teamName}`)
 
                 setName(response.data.name)
                 setCountry(response.data.country)
