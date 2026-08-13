@@ -20,8 +20,8 @@ function CreateTeamPage() {
 
             navigate("/teams")
         }
-        catch {
-            setError("Failed to create team")
+        catch (err) {
+            setError(err.response?.data || "Something went wrong")
         }
     }
 

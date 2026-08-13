@@ -32,8 +32,8 @@ function CreatePlayerPage() {
 
                 navigate(`/teams/${team.name}`)
             }
-            catch {
-                setError("Failed to add player")
+            catch (err) {
+                setError(err.response?.data || "Something went wrong")
             }
         }
 

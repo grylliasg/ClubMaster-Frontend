@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Container, Grid, Snackbar, Typography } from "@mui/material"
+import { Button, Card, CardContent, Container, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Snackbar, Typography } from "@mui/material"
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import api from "../../api"
@@ -11,6 +11,7 @@ function PlayerDetailsPage() {
     const player = location.state.player
 
     const [error, setError] = useState("")
+    const [openDialog, setOpenDialog] = useState(false)
 
     const handleDelete = () => {
 
@@ -38,9 +39,17 @@ function PlayerDetailsPage() {
                             <Typography variant="body1">{player.position}</Typography>
                             <Typography variant="body1">{player.dateOfBirth}</Typography>
                             <Button variant="contained" onClick={() => navigate(`/players/${player.id}/edit`, { state: { player } })}>Edit Player</Button>
-                            <Button variant="outlined" color="error" onClick={handleDelete}>Delete Player</Button>
+                            <Button variant="outlined" color="error" onClick={() => setOpenDialog(true)}>Delete Player</Button>
                         </CardContent>
                     </Card>
+                    <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+                        <DialogTitle sx={{ color: "black" }}>Delete Player</DialogTitle>
+                        <DialogContent>Are you sure to delete <strong>{player.firstName} {player.lastName}</strong></DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
+                            <Button onClick={handleDelete}>Delete</Button>
+                        </DialogActions>
+                    </Dialog>
                 </Grid>
 
             </Container>
