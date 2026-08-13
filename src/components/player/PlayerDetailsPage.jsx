@@ -43,8 +43,8 @@ function PlayerDetailsPage() {
                         </CardContent>
                     </Card>
                     <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-                        <DialogTitle sx={{color: "black"}}>Delete Player</DialogTitle>
-                        <DialogContent>Are you sure to delete this player?</DialogContent>
+                        <DialogTitle sx={{ color: "black" }}>Delete Player</DialogTitle>
+                        <DialogContent>Are you sure to delete <strong>{player.firstName} {player.lastName}</strong></DialogContent>
                         <DialogActions>
                             <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
                             <Button onClick={handleDelete}>Delete</Button>
