@@ -100,7 +100,7 @@ function TeamDetailsPage() {
                         </CardContent>
                     </Card>
                     <Dialog open={confirmDeletion} onClose={() => setConfirmDeletion(false)}>
-                        <DialogTitle>
+                        <DialogTitle sx={{color: "black"}}>
                             Delete Team
                         </DialogTitle>
                         <DialogContent>
