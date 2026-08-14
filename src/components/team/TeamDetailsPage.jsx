@@ -20,8 +20,12 @@ function TeamDetailsPage() {
 
                 navigate("/teams")
             }
-            catch {
-                setError("Failed to delete team")
+            catch (err) {
+                if (err.response?.status === 403) {
+                    setError("You do not have the permission to perform this action")
+                } else {
+                    setError(err.response?.data || "Something went wrong")
+                }
             }
         }
 

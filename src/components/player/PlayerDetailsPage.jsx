@@ -20,8 +20,12 @@ function PlayerDetailsPage() {
                 await api.delete(`/players/${player.id}`)
                 navigate(`/teams/${player.team.name}`)
             }
-            catch {
-                setError("Failed to delete player")
+            catch (err) {
+                if (err.response?.status === 403) {
+                    setError("You do not have the permission to perform this action")
+                } else {
+                    setError(err.response?.data || "Something went wrong")
+                }
             }
         }
 
