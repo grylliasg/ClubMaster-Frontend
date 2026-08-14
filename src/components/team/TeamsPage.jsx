@@ -38,7 +38,7 @@ function TeamsPage() {
         loading ? <p>Loading Teams...</p> :
             error ? <p>{error}</p> :
                 <Container>
-                    <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+                    <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2, mt: 2 }}>
                         <Button
                             variant="contained"
                             color="error"
@@ -48,8 +48,8 @@ function TeamsPage() {
                             Logout
                         </Button>
                     </Box>
-                    <Typography variant="h4">Teams</Typography>
-                    <Button variant="contained" size="small" onClick={() => navigate("/teams/new")}>Add Team</Button>
+                    <Typography sx={{ mb: 2 }} variant="h4">Teams</Typography>
+                    <Button sx={{ mb: 3 }} variant="contained" size="small" onClick={() => navigate("/teams/new")}>Add Team</Button>
                     <Grid container>
                         {teams.map((team) => (
                             <Grid item xs={12} sm={6} key={team.id}>
