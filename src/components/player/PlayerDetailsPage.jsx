@@ -45,6 +45,7 @@ function PlayerDetailsPage() {
                             <Button variant="contained" onClick={() => navigate(`/players/${player.id}/edit`, { state: { player } })}>Edit Player</Button>
                             <Button variant="outlined" color="error" onClick={() => setOpenDialog(true)}>Delete Player</Button>
                         </CardContent>
+                        <Button variant="outlined" color="primary" sx={{ textTransform: "none", borderRadius: 2, fontWeight: 600, px: 2, boxShadow: "none", "&:hover": { boxShadow: "none", }, }} onClick={() => navigate(`/players/${player.id}/transfer`, { state: { player } })}>Transfer</Button>
                     </Card>
                     <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
                         <DialogTitle sx={{ color: "black" }}>Delete Player</DialogTitle>
