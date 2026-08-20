@@ -14,7 +14,6 @@ function TransferPlayerPage() {
 
     const [teams, setTeams] = useState([])
     const [error, setError] = useState("")
-    const [success, setSuccess] = useState("")
     const [chosenTeam, setChosenTeam] = useState(null)
 
     useEffect(() => {
@@ -47,10 +46,13 @@ function TransferPlayerPage() {
                         team: player.team
                     })
 
-                setSuccess(`Player transfered to ${chosenTeam.name}`)
+                navigate(`/players/${player.id}`, {
+                    state: { success: `Player transferred to ${chosenTeam.name}` }
+                })
+
             }
-            catch {
-                setError("Failed to transfer player")
+            catch (err) {
+                setError(err.response?.data || "Something went wrong")
             }
 
         }
@@ -69,16 +71,17 @@ function TransferPlayerPage() {
                 Choose Team to Transfer
             </Typography>
 
-            {teams.map((team) => (
-                <Button key={team.id} variant={chosenTeam === team ? "contained" : "outlined"} onClick={() => setChosenTeam(team)}>{team.name}</Button>
-            ))}
+            {teams.map((team) => {
+                if (team.id !== player.team.id) {
+                    return <Button key={team.id} variant={chosenTeam === team ? "contained" : "outlined"} onClick={() => setChosenTeam(team)}>{team.name}</Button>
+                }
+            })}
 
             <Container><Button sx={{ mt: 5 }} variant="contained" onClick={handleSubmit}>
                 Submit
             </Button></Container>
 
             <Snackbar open={!!error} message={error} ></Snackbar>
-            <Snackbar open={!!success} message={success} ></Snackbar>
         </Container>
     )
 
