@@ -36,15 +36,7 @@ function TransferPlayerPage() {
     const handleSubmit = () => {
         async function transferPlayer() {
             try {
-                await api.put(`/players/transfer/${chosenTeam.id}`,
-                    {
-                        id: player.id,
-                        firstName: player.firstName,
-                        lastName: player.lastName,
-                        position: player.position,
-                        dateOfBirth: player.dateOfBirth,
-                        team: player.team
-                    })
+                await api.patch(`/players/${player.id}/team/${chosenTeam.id}`)
 
                 navigate(`/players/${player.id}`, {
                     state: { success: `Player transferred to ${chosenTeam.name}` }
@@ -77,9 +69,11 @@ function TransferPlayerPage() {
                 }
             })}
 
-            <Container><Button sx={{ mt: 5 }} variant="contained" onClick={handleSubmit}>
-                Submit
-            </Button></Container>
+            {chosenTeam && (
+                (<Container><Button sx={{ mt: 5 }} variant="contained" onClick={handleSubmit}>
+                    Submit
+                </Button></Container>)
+            )}
 
             <Snackbar open={!!error} message={error} ></Snackbar>
         </Container>
