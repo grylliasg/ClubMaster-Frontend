@@ -20,6 +20,7 @@ function EditPlayerPage() {
             try {
                 const response = await api.put(`/players/${player.id}`,
                     {
+                        id: player.id,
                         firstName: firstName,
                         lastName: lastName,
                         position: position,
