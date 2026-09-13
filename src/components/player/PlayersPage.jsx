@@ -45,7 +45,7 @@ function PlayersPage() {
 
             <TextField
                 label="Search players"
-                placeholder="Search by first or last name"
+                placeholder="Search by last name"
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 sx={{ mb: 3, width: "350px" }}
