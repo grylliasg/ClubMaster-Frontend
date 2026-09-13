@@ -1,10 +1,10 @@
-import { Button, Container, Snackbar, TextField, Typography } from "@mui/material"
+import { Snackbar, TextField } from "@mui/material"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import api from "../../api"
+import FormCard from "../FormCard"
 
 function CreateTeamPage() {
-
     const [name, setName] = useState("")
     const [country, setCountry] = useState("")
     const [error, setError] = useState("")
@@ -12,46 +12,43 @@ function CreateTeamPage() {
 
     const handleSubmit = async () => {
         try {
-            await api.post("/teams",
-                {
-                    name: name,
-                    country: country
-                })
+            await api.post("/teams", {
+                name: name,
+                country: country,
+            })
 
             navigate("/teams")
-        }
-        catch (err) {
+        } catch (err) {
             setError(err.response?.data || "Something went wrong")
         }
     }
 
     return (
-        <Container>
-            <Button variant="outlined" onClick={() => navigate(`/teams`)}>Back to teams</Button>
-            <Typography variant="h4">
-                Create Team
-            </Typography>
+        <>
+            <FormCard
+                title="Create Team"
+                onBack={() => navigate("/teams")}
+                backLabel="Back to teams"
+                onSubmit={handleSubmit}
+                submitLabel="Create Team"
+            >
+                <TextField
+                    label="Team Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                />
 
-            <TextField
-                label="Team Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
+                <TextField
+                    label="Country"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    required
+                />
+            </FormCard>
 
-            <TextField
-                label="Country"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-            />
-
-            <Button variant="contained" onClick={handleSubmit}>
-                Create Team
-            </Button>
-
-            <Snackbar open={!!error} message={error} ></Snackbar>
-        </Container>
-
-
+            <Snackbar open={!!error} message={error} />
+        </>
     )
 }
 

@@ -1,80 +1,78 @@
-import { Button, Container, Snackbar, TextField, Typography } from "@mui/material"
+import { Snackbar, TextField } from "@mui/material"
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import api from "../../api"
-
+import FormCard from "../FormCard"
 
 function CreatePlayerPage() {
-
-    const [firstName, setFirstName] = useState()
-    const [lastName, setLastName] = useState()
-    const [position, setPosition] = useState()
-    const [dateOfBirth, setDateOfBirth] = useState()
-    const [error, setError] = useState()
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [position, setPosition] = useState("")
+    const [dateOfBirth, setDateOfBirth] = useState("")
+    const [error, setError] = useState("")
     const navigate = useNavigate()
 
     const location = useLocation()
     const team = location.state.team
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        try {
+            await api.post("/players", {
+                firstName: firstName,
+                lastName: lastName,
+                position: position,
+                dateOfBirth: dateOfBirth,
+                team: team,
+            })
 
-        async function addPlayer() {
-            try {
-                const response = await api.post("/players",
-                    {
-                        firstName: firstName,
-                        lastName: lastName,
-                        position: position,
-                        dateOfBirth: dateOfBirth,
-                        team: team
-                    }
-                )
-
-                navigate(`/teams/${team.name}`)
-            }
-            catch (err) {
-                setError(err.response?.data || "Something went wrong")
-            }
+            navigate(`/teams/${team.name}`)
+        } catch (err) {
+            setError(err.response?.data || "Something went wrong")
         }
-
-        addPlayer()
     }
 
     return (
-        <Container>
-            <Button variant="outlined" onClick={() => navigate(`/teams/${team.name}`)}>Back to team</Button>
-            <Typography variant="h4">
-                Add Player
-            </Typography>
+        <>
+            <FormCard
+                title="Add Player"
+                onBack={() => navigate(`/teams/${team.name}`)}
+                backLabel="Back to team"
+                onSubmit={handleSubmit}
+            >
+                <TextField
+                    label="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                />
 
-            <TextField
-                label="First Name"
-                onChange={(e) => setFirstName(e.target.value)}
-            />
+                <TextField
+                    label="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                />
 
-            <TextField
-                label="Last Name"
-                onChange={(e) => setLastName(e.target.value)}
-            />
+                <TextField
+                    label="Position"
+                    value={position}
+                    onChange={(e) => setPosition(e.target.value)}
+                    required
+                />
 
-            <TextField
-                label="Position"
-                onChange={(e) => setPosition(e.target.value)}
-            />
+                <TextField
+                    label="Date Of Birth"
+                    type="date"
+                    value={dateOfBirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                    required
+                />
+            </FormCard>
 
-            <TextField
-                label="Date Of Birth"
-                onChange={(e) => setDateOfBirth(e.target.value)}
-            />
-
-            <Button variant="contained" onClick={handleSubmit}>
-                Submit
-            </Button>
-
-            <Snackbar open={!!error} message={error} ></Snackbar>
-        </Container>
+            <Snackbar open={!!error} message={error} />
+        </>
     )
-
 }
 
 export default CreatePlayerPage

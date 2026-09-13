@@ -35,7 +35,7 @@ function TeamDetailsPage() {
     useEffect(() => {
         async function fetchTeam() {
             try {
-                const response = await api.get(`/teams/${name}`)
+                const response = await api.get(`/teams?name=${name}`)
                 setTeam(response.data)
             }
             catch {
@@ -49,7 +49,7 @@ function TeamDetailsPage() {
     useEffect(() => {
         async function fetchPlayers() {
             try {
-                const playersResponse = await api.get(`/players/${name}`)
+                const playersResponse = await api.get(`/${team.id}/players`)
                 setPlayers(playersResponse.data)
             }
             catch {

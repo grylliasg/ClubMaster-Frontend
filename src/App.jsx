@@ -6,6 +6,7 @@ import EditPlayerPage from "./components/player/EditPlayerPage.jsx"
 import CreatePlayerPage from "./components/player/CreatePlayerPage.jsx"
 import TransferPlayerPage from "./components/player/TransferPlayerPage.jsx"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import PlayersPage from "./components/player/PlayersPage.jsx"
 import CreateTeamPage from "./components/team/CreateTeamPage.jsx"
 import LoginPage from "./components/LoginPage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/teams/:name" element={<ProtectedRoute><TeamDetailsPage /></ProtectedRoute>} />
                 <Route path="/teams/new" element={<ProtectedRoute><CreateTeamPage /></ProtectedRoute>} />
                 <Route path="/teams/:teamName/edit" element={<ProtectedRoute><EditTeamPage /></ProtectedRoute>} />
+                <Route path="/players" element={<ProtectedRoute><PlayersPage />  </ProtectedRoute>} />
                 <Route path="/players/:id" element={<ProtectedRoute><PlayerDetailsPage /></ProtectedRoute>} />
                 <Route path="/players/:id/edit" element={<ProtectedRoute><EditPlayerPage /></ProtectedRoute>} />
                 <Route path="/players/new" element={<ProtectedRoute><CreatePlayerPage /></ProtectedRoute>} />
@@ -25,7 +27,6 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
             </Routes>
         </BrowserRouter>
-        
     )
 }
 
